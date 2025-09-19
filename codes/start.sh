@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# PromptyAI Quick Start Script
-# This script helps you get PromptyAI running quickly
 
 set -e
 
-echo "🚀 PromptyAI Quick Start"
+echo "PromptyAI Start"
 echo "======================="
 
-# Check if we're in the right directory
 if [ ! -f "README.md" ] || [ ! -d "backend" ] || [ ! -d "frontend" ]; then
-    echo "❌ Please run this script from the PromptyAI root directory"
+    echo "Please run this script from the PromptyAI root directory"
     exit 1
 fi
 
@@ -23,17 +20,17 @@ command_exists() {
 echo "🔍 Checking prerequisites..."
 
 if ! command_exists python3; then
-    echo "❌ Python 3 is not installed. Please install Python 3.8 or higher."
+    echo "Python 3 is not installed. Please install Python 3.8 or higher."
     exit 1
 fi
 
 if ! command_exists node; then
-    echo "❌ Node.js is not installed. Please install Node.js 16 or higher."
+    echo "Node.js is not installed. Please install Node.js 16 or higher."
     exit 1
 fi
 
 if ! command_exists npm; then
-    echo "❌ npm is not installed. Please install npm."
+    echo "npm is not installed. Please install npm."
     exit 1
 fi
 
@@ -72,38 +69,31 @@ echo ""
 echo "🔧 Setting up backend..."
 cd backend
 
-# Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
     echo "Creating Python virtual environment..."
     python3 -m venv venv
 fi
 
-# Activate virtual environment
 echo "Activating virtual environment..."
 source venv/bin/activate
 
-# Install dependencies
 echo "Installing Python dependencies..."
 pip install -r requirements.txt
 
-# Run setup script
 echo "Running backend setup..."
 python setup.py
 
 echo "✅ Backend setup complete"
 
-# Setup frontend
 echo ""
 echo "🔧 Setting up frontend..."
 cd ../frontend/promptyai-frontend
 
-# Install dependencies
 echo "Installing Node.js dependencies..."
 npm install
 
 echo "✅ Frontend setup complete"
 
-# Check for OpenAI API key
 echo ""
 echo "🔑 Checking OpenAI API key..."
 if [ -z "$OPENAI_API_KEY" ]; then
@@ -116,11 +106,9 @@ else
     echo "✅ OpenAI API key found"
 fi
 
-# Create start scripts
 echo ""
 echo "📝 Creating start scripts..."
 
-# Backend start script
 cat > ../../start-backend.sh << 'EOF'
 #!/bin/bash
 cd backend
@@ -130,7 +118,6 @@ echo "📚 API Documentation: http://localhost:8000/docs"
 python main.py
 EOF
 
-# Frontend start script
 cat > ../../start-frontend.sh << 'EOF'
 #!/bin/bash
 cd frontend/promptyai-frontend
@@ -138,13 +125,11 @@ echo "🚀 Starting PromptyAI Frontend on http://localhost:5173"
 npm run dev
 EOF
 
-# Make scripts executable
 chmod +x ../../start-backend.sh
 chmod +x ../../start-frontend.sh
 
 echo "✅ Start scripts created"
 
-# Final instructions
 echo ""
 echo "🎉 Setup Complete!"
 echo "=================="
