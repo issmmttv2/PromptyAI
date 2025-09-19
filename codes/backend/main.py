@@ -91,6 +91,7 @@ async def startup_event():
     global db, openai_client, nlp, sentiment_analyzer
     
     # Initialize MongoDB
+    '''
     try:
         client = AsyncIOMotorClient("mongodb://localhost:27017")
         db = client.promptyai
@@ -98,6 +99,20 @@ async def startup_event():
     except Exception as e:
         print(f"MongoDB connection failed: {e}")
         db = None
+        
+    mongo_url = os.getenv("MONGODB_URL")
+'''
+if mongo_url:
+    try:
+        client = AsyncIOMotorClient(mongo_url)
+        db = client.promptyai
+        print("Connected to MongoDB")
+    except Exception as e:
+        print(f"MongoDB connection failed: {e}")
+        db = None
+else:
+    print("MONGODB_URL not set. Running without database persistence.")
+    db = None
     
     # Initialize OpenAI client
     try:
