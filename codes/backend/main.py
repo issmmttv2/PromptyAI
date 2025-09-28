@@ -8,7 +8,6 @@ from datetime import datetime
 import uuid
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
-import openai
 from transformers import pipeline
 import spacy
 import nltk
@@ -16,6 +15,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 import re
 import json
+import openai
 
 # Download required NLTK data
 try:
@@ -36,7 +36,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global variables
 db = None
 openai_client = None
 nlp = None
@@ -114,7 +113,6 @@ else:
     print("MONGODB_URL not set. Running without database persistence.")
     db = None
     
-    # Initialize OpenAI client
     try:
         openai_client = openai.OpenAI()
         print("OpenAI client initialized")
@@ -130,7 +128,6 @@ else:
         print(f"spaCy loading failed: {e}")
         nlp = None
     
-    # Initialize sentiment analyzer
     try:
         sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
         print("Sentiment analyzer loaded")
