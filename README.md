@@ -1,8 +1,14 @@
-# PromptyAI - AI-Powered Prompt Generator
+# PromptyAI 🧠✨
 
 An intelligent prompt generation system leveraging React, FastAPI, and MongoDB, integrating AI technologies to refine prompt structures dynamically, enhancing contextual relevance and usability for Large Language Models (LLMs).
 
-## Features
+![PromptyAI Banner](https://img.shields.io/badge/PromptyAI-AI--Powered%20Prompts-blue?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white)
+
+## 🌟 Features
 
 - **AI-Powered Enhancement**: Automatically improve prompts using OpenAI's GPT models
 - **Intelligent Categorization**: Automatic prompt classification using NLP techniques
@@ -14,7 +20,7 @@ An intelligent prompt generation system leveraging React, FastAPI, and MongoDB, 
 - **Responsive Design**: Modern React frontend with Tailwind CSS
 - **RESTful API**: Scalable FastAPI backend with comprehensive endpoints
 
-## Technology Stack
+## 🛠 Technology Stack
 
 ### Backend
 - **FastAPI**: Modern, fast web framework for building APIs
@@ -31,200 +37,315 @@ An intelligent prompt generation system leveraging React, FastAPI, and MongoDB, 
 - **Framer Motion**: Smooth animations and transitions
 - **Lucide Icons**: Beautiful icon library
 
-## Project Structure
+## 📋 Prerequisites
 
-```
-promptyai/
-├── backend/
-│   ├── main.py              # FastAPI application
-│   ├── requirements.txt     # Python dependencies
-│   └── setup.py            # Backend setup script
-├── frontend/
-│   └── promptyai-frontend/  # React application
-│       ├── src/
-│       │   ├── App.jsx     # Main React component
-│       │   ├── App.css     # Styling
-│       │   └── components/ # UI components
-│       ├── package.json    # Node.js dependencies
-│       └── index.html      # HTML entry point
+Before you begin, ensure you have the following installed:
 
-└── README.md               # This file
-```
+- **Python 3.9+**
+- **Node.js 18+** and **pnpm** (or npm/yarn)
+- **MongoDB** (local installation or MongoDB Atlas account)
+- **OpenAI API Key** (get one at https://platform.openai.com)
 
-## Quick Start
+## 🚀 Quick Start
 
-### Prerequisites
-
-- Python 3.8+
-- Node.js 16+
-- MongoDB 4.4+
-- OpenAI API key
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone 
-   cd promptyai
-   ```
-
-2. **Backend Setup**
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   python setup.py
-   ```
-
-3. **Frontend Setup**
-   ```bash
-   cd ../frontend/promptyai-frontend
-   npm install
-   ```
-
-4. **Environment Configuration**
-   ```bash
-   # Set OpenAI API key (optional)
-   export OPENAI_API_KEY="your-openai-api-key"
-   ```
-
-5. **Start MongoDB**
-   ```bash
-   # Ubuntu/Debian
-   sudo systemctl start mongod
-   
-   # macOS with Homebrew
-   brew services start mongodb-community
-   
-   # Docker
-   docker run -d -p 27017:27017 mongo:latest
-   ```
-
-6. **Run the Application**
-   
-   Terminal 1 (Backend):
-   ```bash
-   cd backend
-   python main.py
-   ```
-   
-   Terminal 2 (Frontend):
-   ```bash
-   cd frontend/promptyai-frontend
-   npm run dev
-   ```
-
-7. **Access the Application**
-   - Frontend: http://localhost:5173
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
-
-## Usage
-
-### Basic Prompt Enhancement
-
-1. Open the application in your browser
-2. Navigate to the "Generate" tab
-3. Enter your prompt in the text area
-4. Select category, style, and complexity (optional)
-5. Click "Generate Enhanced Prompt"
-6. Copy or share the enhanced result
-
-### Managing Prompts
-
-- **Library Tab**: Browse all generated prompts
-- **Search**: Filter prompts by content or category
-- **Share**: Generate shareable URLs for prompts
-- **Delete**: Remove unwanted prompts
-
-### Analytics
-
-- **Stats Tab**: View usage statistics
-- **Category Distribution**: See prompt categorization trends
-- **Total Counts**: Track generation metrics
-
-## API Endpoints
-
-### Core Endpoints
-
-- `POST /generate` - Generate enhanced prompt
-- `GET /prompts` - List all prompts
-- `GET /prompts/{id}` - Get specific prompt
-- `PUT /prompts/{id}` - Update prompt
-- `DELETE /prompts/{id}` - Delete prompt
-- `GET /share/{id}` - Get shareable prompt
-- `GET /categories` - List available categories
-- `GET /styles` - List available styles
-- `GET /stats` - Get system statistics
-
-### Sample Request
+### 1. Clone the Repository
 
 ```bash
-curl -X POST "http://localhost:8000/generate" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "text": "Write a story about AI",
-       "style": "creative",
-       "complexity": "medium"
-     }'
+git clone <your-repo-url>
+cd promptyai
 ```
 
-## Configuration
-
-### Environment Variables
-
-- `OPENAI_API_KEY`: OpenAI API key for prompt enhancement
-- `MONGODB_URL`: MongoDB connection string (default: mongodb://localhost:27017)
-
-### Customization
-
-- **Categories**: Modify `PROMPT_CATEGORIES` in `main.py`
-- **Styles**: Update `STYLE_TEMPLATES` in `main.py`
-- **UI Theme**: Customize colors in `App.css`
-
-## Development
-
-### Backend Development
+### 2. Backend Setup
 
 ```bash
-cd backend
+cd codes/backend
+
+# Create a virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# Download spaCy English model
+python -m spacy download en_core_web_sm
+
+# Create .env file from example
+cp .env.example .env
+
+# Edit .env and add your credentials
+# MONGODB_URL=mongodb://localhost:27017
+# OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-### Frontend Development
+### 3. Frontend Setup
 
 ```bash
-cd frontend/promptyai-frontend
-npm run dev
+cd codes/frontend/promptyai-frontend
+
+# Install dependencies
+pnpm install
+# or: npm install
+
+# Create .env file from example
+cp .env.example .env
+
+# The default configuration should work if backend runs on localhost:8000
 ```
 
-### Testing
+### 4. Start MongoDB
 
 ```bash
-# Backend tests
-cd backend
-python -m pytest
+# If using local MongoDB
+mongod
 
-# Frontend tests
-cd frontend/promptyai-frontend
-npm test
+# Or use Docker
+docker run -d -p 27017:27017 --name mongodb mongo:latest
+
+# Or use MongoDB Atlas (cloud) - just update MONGODB_URL in backend .env
 ```
 
-## Contributing
+### 5. Run the Application
+
+**Terminal 1 - Backend:**
+```bash
+cd codes/backend
+python run.py
+# Or: uvicorn main:app --reload
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd codes/frontend/promptyai-frontend
+pnpm dev
+# Or: npm run dev
+```
+
+The application will be available at:
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+
+## 🔧 Configuration
+
+### Backend Environment Variables (.env)
+
+```bash
+# MongoDB Connection
+MONGODB_URL=mongodb://localhost:27017
+
+# OpenAI API Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Server Configuration
+HOST=0.0.0.0
+PORT=8000
+```
+
+### Frontend Environment Variables (.env)
+
+```bash
+# Backend API URL
+VITE_API_BASE_URL=http://localhost:8000
+
+# App Configuration
+VITE_APP_NAME=PromptyAI
+VITE_APP_DESCRIPTION=AI-Powered Prompt Generator for LLMs
+```
+
+## 📚 API Endpoints
+
+### Prompt Management
+
+- `POST /generate` - Generate and enhance a prompt
+- `GET /prompts` - Get list of prompts (with optional filters)
+- `GET /prompts/{prompt_id}` - Get specific prompt by ID
+- `PUT /prompts/{prompt_id}` - Update a prompt
+- `DELETE /prompts/{prompt_id}` - Delete a prompt
+
+### Utilities
+
+- `GET /categories` - Get available categories
+- `GET /styles` - Get available writing styles
+- `GET /stats` - Get system statistics
+- `GET /share/{prompt_id}` - Get shareable prompt
+
+### Interactive API Documentation
+
+Visit http://localhost:8000/docs for interactive Swagger UI documentation.
+
+## 🎨 Features in Detail
+
+### 1. Prompt Enhancement
+
+The AI analyzes your input and enhances it based on:
+- Selected writing style (professional, casual, academic, creative, technical, friendly)
+- Complexity level (simple, medium, complex)
+- Automatic or manual category selection
+- Context and intent preservation
+
+### 2. Intelligent Categorization
+
+Prompts are automatically categorized into:
+- **Creative**: Story writing, art, imagination
+- **Technical**: Code, programming, algorithms
+- **Business**: Marketing, strategy, analysis
+- **Educational**: Teaching, tutorials, explanations
+- **Conversational**: Chat, discussions
+- **Analytical**: Comparisons, evaluations
+
+### 3. NLP Features
+
+- **Keyword Extraction**: Uses NLTK and spaCy for intelligent keyword identification
+- **Sentiment Analysis**: Powered by Hugging Face Transformers
+- **Entity Recognition**: Identifies important entities in your prompts
+- **Text Processing**: Advanced tokenization and text analysis
+
+### 4. Analytics Dashboard
+
+Track your prompt generation with:
+- Total prompts created
+- Category distribution
+- Style usage statistics
+- Trend analysis
+
+## 🐳 Docker Deployment (Optional)
+
+Create a `docker-compose.yml` in the root directory:
+
+```yaml
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: ./codes/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./codes/frontend/promptyai-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+
+volumes:
+  mongodb_data:
+```
+
+Then run:
+```bash
+docker-compose up
+```
+
+## 🧪 Testing
+
+### Backend Tests
+```bash
+cd codes/backend
+pytest tests/
+```
+
+### Frontend Tests
+```bash
+cd codes/frontend/promptyai-frontend
+pnpm test
+```
+
+## 📈 Usage Examples
+
+### Example 1: Creative Writing Prompt
+
+**Input:**
+```
+Write a story about space
+```
+
+**Enhanced Output:**
+```
+Craft an imaginative and engaging science fiction narrative set in the vast expanse of space. 
+Include vivid descriptions of celestial phenomena, compelling characters facing unique challenges 
+in zero gravity, and explore themes of human adaptation and discovery in the cosmos. Consider 
+incorporating elements of wonder, isolation, or adventure to create a captivating tale that 
+transports readers beyond Earth's atmosphere.
+```
+
+### Example 2: Technical Prompt
+
+**Input:**
+```
+Debug my Python code
+```
+
+**Enhanced Output:**
+```
+Please provide a systematic debugging analysis of the Python code. Include:
+1. Identification of syntax errors, runtime errors, and logical bugs
+2. Step-by-step explanation of the debugging process
+3. Recommended fixes with code examples
+4. Best practices to prevent similar issues in the future
+5. Performance optimization suggestions if applicable
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## License
+## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - OpenAI for GPT models
 - Hugging Face for Transformers
-- spaCy team for NLP tools
-- React and FastAPI communities
+- spaCy team for NLP capabilities
+- shadcn/ui for beautiful React components
+- FastAPI and React communities
+
+## 📞 Support
+
+For questions or issues, please:
+- Open an issue on GitHub
+- Check the API documentation at http://localhost:8000/docs
+- Review existing issues and discussions
+
+## 🗺 Roadmap
+
+- [ ] User authentication and authorization
+- [ ] Prompt versioning and history
+- [ ] Collaborative prompt editing
+- [ ] Export prompts to various formats
+- [ ] Browser extension
+- [ ] Mobile app
+- [ ] Advanced analytics and insights
+- [ ] Prompt templates library
+- [ ] Multi-language support
+- [ ] Integration with popular LLM platforms
+
+---
+
+Built with ❤️ using FastAPI, React, and AI
