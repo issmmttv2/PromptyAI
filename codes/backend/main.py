@@ -90,29 +90,21 @@ async def startup_event():
     global db, openai_client, nlp, sentiment_analyzer
     
     # Initialize MongoDB
-    '''
-    try:
-        client = AsyncIOMotorClient("mongodb://localhost:27017")
-        db = client.promptyai
-        print("Connected to MongoDB")
-    except Exception as e:
-        print(f"MongoDB connection failed: {e}")
-        db = None
-        
-    mongo_url = os.getenv("MONGODB_URL")
-'''
-if mongo_url:
-    try:
-        client = AsyncIOMotorClient(mongo_url)
-        db = client.promptyai
-        print("Connected to MongoDB")
-    except Exception as e:
-        print(f"MongoDB connection failed: {e}")
-        db = None
-else:
-    print("MONGODB_URL not set. Running without database persistence.")
-    db = None
+    mongo_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017")
     
+    if mongo_url:
+        try:
+            client = AsyncIOMotorClient(mongo_url)
+            db = client.promptyai
+            print("Connected to MongoDB")
+        except Exception as e:
+            print(f"MongoDB connection failed: {e}")
+            db = None
+    else:
+        print("MONGODB_URL not set. Running without database persistence.")
+        db = None
+    
+    # Initialize OpenAI
     try:
         openai_client = openai.OpenAI()
         print("OpenAI client initialized")
@@ -125,9 +117,16 @@ else:
         nlp = spacy.load("en_core_web_sm")
         print("spaCy model loaded")
     except Exception as e:
-        print(f"spaCy loading failed: {e}")
-        nlp = None
+        print(f"spaCy loading failed: {e}. Trying to download...")
+        try:
+            import subprocess
+            subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"], check=True)
+            nlp = spacy.load("en_core_web_sm")
+            print("spaCy model loaded after download")
+        except:
+            nlp = None
     
+    # Initialize sentiment analyzer
     try:
         sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
         print("Sentiment analyzer loaded")

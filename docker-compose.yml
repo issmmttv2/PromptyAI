@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: promptyai-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=promptyai
+    networks:
+      - promptyai-network
+
+  backend:
+    build: 
+      context: ./codes/backend
+      dockerfile: Dockerfile
+    container_name: promptyai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HOST=0.0.0.0
+      - PORT=8000
+    depends_on:
+      - mongodb
+    volumes:
+      - ./codes/backend:/app
+    networks:
+      - promptyai-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./codes/frontend/promptyai-frontend
+      dockerfile: Dockerfile
+    container_name: promptyai-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./codes/frontend/promptyai-frontend:/app
+      - /app/node_modules
+    networks:
+      - promptyai-network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  promptyai-network:
+    driver: bridge
